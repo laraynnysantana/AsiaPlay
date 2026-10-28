@@ -4,9 +4,7 @@ Projeto acadêmico de banco de dados relacional para organizar a operação de u
 SGBD: MySQL
 Modelagem: MySQL Workbench
 Banco de dados: AsiaPlay
-
 📌 Sumário
-
 1. Domínio do banco de dados
 2. Contextualização
 3. Proposta de melhoria
@@ -66,6 +64,7 @@ nome	Conferir no script SQL	Nome do usuário
 email	Conferir no script SQL	E-mail do usuário
 data_cadastro	Conferir no script SQL	Data do cadastro
 data_nascimento	Conferir no script SQL	Data de nascimento
+
 
 4.3. plano
 Registra os planos oferecidos pela plataforma.
@@ -161,17 +160,13 @@ producao → avaliacao	1:N	Uma produção pode receber avaliações de diferente
 6. Formas normais
 6.1. Primeira Forma Normal (1FN)
 Cada campo deve armazenar um único valor, sem listas ou grupos repetidos. Na AsiaPlay, os gêneros não são armazenados em uma coluna separados por vírgulas; cada associação entre produção e gênero é registrada individualmente em producao_genero.
-
 6.2. Segunda Forma Normal (2FN)
 A tabela deve estar na 1FN e todos os atributos não-chave devem depender da chave primária completa. Em producao_genero, a chave primária é composta por id_producao e id_genero, e a tabela contém apenas esses campos. Assim, não há atributos adicionais que dependam somente de parte dessa chave.
-
 6.3. Terceira Forma Normal (3FN)
 A tabela deve estar na 2FN e os atributos não-chave não devem depender transitivamente da chave primária. Os dados dos países ficam em pais, enquanto producao armazena a referência id_pais. Da mesma forma, os preços ficam em plano, enquanto assinatura referencia o plano contratado.
-
 6.4. Quarta Forma Normal (4FN)
 A 4FN busca evitar redundâncias causadas por dependências multivaloradas independentes. Na AsiaPlay, as associações entre produções e gêneros ficam separadas das temporadas e dos episódios. Dessa forma, não é necessário repetir todas as combinações de gêneros e episódios em uma mesma tabela.
-
-8. Implementação SQL e dados de teste
+7. Implementação SQL e dados de teste
 A documentação do projeto prevê três scripts SQL:
 - 01_criacao_tabelas.sql — criação do banco e das tabelas;
 - 02_insercao_dados.sql — inserção dos dados de exemplo;
@@ -197,6 +192,7 @@ Nº	Objetivo da consulta	Recursos SQL
 13	Consultar usuários e suas avaliações	JOIN, ORDER BY
 14	Contar temporadas por série	LEFT JOIN, GROUP BY
 15	Calcular o total e a duração acumulada dos episódios	COUNT, SUM, JOIN, GROUP BY
+
 
 As respostas exatas dependem dos dados inseridos no banco. Execute as consultas no MySQL Workbench e registre os resultados obtidos; não informe respostas presumidas sem validar a execução.
 9. Testes
@@ -251,4 +247,3 @@ Após a restauração, verifique as tabelas, as quantidades de registros e a exe
 7. Exporte o banco para AsiaPlay_dump.sql.
 8. Salve a imagem da modelagem para incluir na entrega.
 Execute os scripts na ordem indicada para que as tabelas existam antes da inserção de dados e das consultas.
-
