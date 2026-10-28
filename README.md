@@ -1,72 +1,185 @@
-AsiaPlay — Banco de Dados Relacional
-Projeto acadêmico da disciplina Banco de Dados, com planejamento de um banco relacional para uma plataforma fictícia de streaming de filmes e séries asiáticos. O SGBD escolhido é o MySQL.
+AsiaPlay — Plataforma de Filmes e Séries Asiáticos
+Projeto acadêmico de banco de dados relacional para organizar a operação de uma plataforma fictícia de streaming de produções asiáticas, incluindo países de origem, usuários, planos, assinaturas, produções, gêneros, temporadas, episódios e avaliações.
+
+SGBD: MySQL
+Modelagem: MySQL Workbench
+Banco de dados: AsiaPlay
+📌 Sumário
 1. Domínio do banco de dados
-A AsiaPlay é uma plataforma digital de filmes e séries asiáticos, incluindo produções da Coreia do Sul, Japão, China, Tailândia e Taiwan. O banco organiza informações sobre países, usuários, planos e assinaturas, produções audiovisuais, gêneros, temporadas, episódios e avaliações.
-2. Contextualização e problema
-Sem um SGBD relacional, a empresa poderia manter os dados em planilhas e arquivos separados. Isso aumentaria o risco de:
-- duplicação de informações de usuários, produções e planos;
-- inconsistências quando uma informação fosse atualizada em apenas um arquivo;
-- dificuldade para consultar as produções mais bem avaliadas e os planos mais utilizados;
-- registros inválidos, como avaliações ligadas a usuários inexistentes;
-- manutenção difícil à medida que o catálogo crescesse;
-- controle de acesso e proteção de dados limitados.
+2. Contextualização
 3. Proposta de melhoria
-A proposta é centralizar as informações em um banco relacional MySQL, utilizando chaves primárias e estrangeiras para identificar os registros e manter a integridade dos relacionamentos.
-
-Benefícios esperados:
-- centralização e melhor organização das informações;
-- redução de redundâncias;
-- maior consistência e integridade referencial;
-- facilidade para inserir, atualizar, excluir e consultar dados;
-- geração de relatórios por meio de SQL;
-- realização de backups e restauração do banco.
 4. Modelagem lógica
-O projeto contempla dez tabelas. A lista abaixo registra os campos descritos na documentação do projeto.
-Tabela	Campos
-pais	id_pais, nome, codigo_iso
-usuario	id_usuario, nome, email, data_cadastro, data_nascimento
-plano	id_plano, nome, preco_mensal, telas_simultaneas, qualidade_maxima
-assinatura	id_assinatura, id_usuario, id_plano, data_inicio, data_fim, status
-producao	id_producao, titulo, tipo, ano_lancamento, classificacao, id_pais, sinopse
-genero	id_genero, nome
-producao_genero	id_producao, id_genero
-temporada	id_temporada, id_producao, numero_temporada, ano_lancamento
-episodio	id_episodio, id_temporada, numero_episodio, titulo, duracao_minutos
-avaliacao	id_avaliacao, id_usuario, id_producao, nota, comentario, data_avaliacao
+5. Relacionamentos e cardinalidades
+6. Formas normais
+7. Implementação SQL e dados de teste
+8. Consultas SQL
+9. Testes
+10. Exportação e restauração do dump
+11. Como executar o projeto
+12. Estrutura sugerida do repositório
+13. Entrega na Sala de Aula
+1. Domínio do banco de dados
+O domínio escolhido é a administração da AsiaPlay, uma empresa fictícia de streaming de filmes e séries asiáticos. O banco de dados organiza informações sobre:
+- países de origem das produções;
+- usuários cadastrados;
+- planos e assinaturas;
+- filmes e séries;
+- gêneros audiovisuais;
+- temporadas e episódios;
+- avaliações dos usuários.
+O objetivo é centralizar essas informações e permitir consultas confiáveis sobre o catálogo, os países de origem, os planos contratados e as avaliações das produções.
+2. Contextualização
+Sem um SGBD relacional, a plataforma poderia manter seus registros em planilhas, documentos e arquivos separados. Esse método pode causar:
+- Duplicação: os dados de usuários, produções e planos podem aparecer em vários arquivos.
+- Inconsistência: uma alteração pode ser feita em um arquivo e não nos demais.
+- Consultas demoradas: localizar as produções mais bem avaliadas ou os planos mais utilizados exigiria trabalho manual.
+- Falhas de integridade: podem surgir avaliações relacionadas a usuários inexistentes ou episódios sem uma temporada válida.
+- Dificuldade de manutenção: o crescimento do catálogo aumenta a complexidade da organização.
+- Segurança limitada: pode ser mais difícil controlar o acesso e proteger as informações.
+3. Proposta de melhoria
+A solução proposta é utilizar o MySQL para centralizar os dados em tabelas relacionadas. As chaves primárias identificam os registros e as chaves estrangeiras conectam as tabelas, ajudando a preservar a integridade referencial.
+Benefícios
+- centralização das informações;
+- redução de redundâncias;
+- maior consistência dos registros;
+- facilidade para cadastrar, atualizar e consultar dados;
+- geração de relatórios por meio de SQL;
+- melhor organização do catálogo de filmes e séries;
+- possibilidade de criar cópias de segurança e restaurar o banco.
+4. Modelagem lógica
+O projeto utiliza dez tabelas. Os campos abaixo seguem a documentação do projeto. Os tipos SQL e as restrições exatas devem ser confirmados no script de criação do banco, pois os arquivos SQL não foram disponibilizados junto à documentação consultada.
+4.1. pais
+Armazena os países de origem das produções.
+Campo	Tipo	Restrições/finalidade
+id_pais	Conferir no script SQL	Chave primária
+nome	Conferir no script SQL	Nome do país
+codigo_iso	Conferir no script SQL	Código ISO do país
 
 
-Atenção sobre os tipos de dados: os arquivos enviados para esta documentação não incluem os scripts .sql de criação das tabelas. Por isso, os tipos SQL, as restrições (NOT NULL, UNIQUE, CHECK) e a definição exata das chaves devem ser conferidos no script de criação antes da entrega final. Não presuma que esta lista de campos substitui o script SQL.
+4.2. usuario
+Armazena os dados dos usuários cadastrados.
+Campo	Tipo	Restrições/finalidade
+id_usuario	Conferir no script SQL	Chave primária
+nome	Conferir no script SQL	Nome do usuário
+email	Conferir no script SQL	E-mail do usuário
+data_cadastro	Conferir no script SQL	Data do cadastro
+data_nascimento	Conferir no script SQL	Data de nascimento
 
-Relacionamentos e cardinalidades
-- País — Produção (1:N): um país pode estar associado a várias produções; cada produção possui um país de origem cadastrado.
-- Usuário — Assinatura (1:N): um usuário pode possuir várias assinaturas ao longo do tempo.
-- Plano — Assinatura (1:N): um plano pode estar associado a várias assinaturas.
-- Produção — Gênero (N:N): uma produção pode ter vários gêneros e um gênero pode classificar várias produções. A tabela producao_genero resolve esse relacionamento.
-- Produção — Temporada (1:N): uma série pode possuir várias temporadas.
-- Temporada — Episódio (1:N): uma temporada pode conter vários episódios.
-- Usuário — Avaliação (1:N): um usuário pode avaliar diferentes produções.
-- Produção — Avaliação (1:N): uma produção pode receber avaliações de diferentes usuários.
-A modelagem visual deve ser exportada ou capturada no MySQL Workbench e incluída na entrega.
-5. Formas normais
-1ª Forma Normal (1FN)
-Cada campo armazena um único valor, sem listas ou grupos repetidos. Os gêneros não ficam agrupados em uma coluna de texto: cada associação é registrada em producao_genero.
-2ª Forma Normal (2FN)
-A tabela deve estar na 1FN e cada atributo não-chave deve depender da chave primária completa. Em producao_genero, a chave composta é formada por id_producao e id_genero, e a tabela não possui atributos adicionais que dependam apenas de parte dessa chave.
-3ª Forma Normal (3FN)
-A tabela deve estar na 2FN e os atributos não-chave não devem depender transitivamente da chave primária. Por exemplo, os dados dos países ficam em pais, enquanto producao guarda a referência id_pais; os preços são mantidos em plano, enquanto assinatura referencia o plano.
-4ª Forma Normal (4FN)
-A 4FN evita redundâncias causadas por dependências multivaloradas independentes. Na AsiaPlay, as associações entre produções e gêneros ficam separadas das temporadas e dos episódios. Assim, não é necessário repetir combinações de gêneros e episódios na mesma tabela.
-6. Implementação SQL e consultas
+
+4.3. plano
+Registra os planos oferecidos pela plataforma.
+Campo	Tipo	Restrições/finalidade
+id_plano	Conferir no script SQL	Chave primária
+nome	Conferir no script SQL	Nome do plano
+preco_mensal	Conferir no script SQL	Preço mensal
+telas_simultaneas	Conferir no script SQL	Quantidade de telas simultâneas
+qualidade_maxima	Conferir no script SQL	Qualidade máxima oferecida
+
+
+4.4. assinatura
+Registra as assinaturas dos usuários.
+Campo	Tipo	Restrições/finalidade
+id_assinatura	Conferir no script SQL	Chave primária
+id_usuario	Conferir no script SQL	Chave estrangeira para usuario.id_usuario
+id_plano	Conferir no script SQL	Chave estrangeira para plano.id_plano
+data_inicio	Conferir no script SQL	Data de início da assinatura
+data_fim	Conferir no script SQL	Data de término, quando aplicável
+status	Conferir no script SQL	Situação da assinatura
+
+
+4.5. producao
+Armazena os filmes e as séries disponíveis no catálogo.
+Campo	Tipo	Restrições/finalidade
+id_producao	Conferir no script SQL	Chave primária
+titulo	Conferir no script SQL	Título da produção
+tipo	Conferir no script SQL	Tipo de produção
+ano_lancamento	Conferir no script SQL	Ano de lançamento
+classificacao	Conferir no script SQL	Classificação indicativa
+id_pais	Conferir no script SQL	Chave estrangeira para pais.id_pais
+sinopse	Conferir no script SQL	Resumo da produção
+
+
+4.6. genero
+Registra os gêneros disponíveis no catálogo.
+Campo	Tipo	Restrições/finalidade
+id_genero	Conferir no script SQL	Chave primária
+nome	Conferir no script SQL	Nome do gênero
+
+
+4.7. producao_genero
+Associa as produções aos respectivos gêneros.
+Campo	Tipo	Restrições/finalidade
+id_producao	Conferir no script SQL	Chave estrangeira para producao.id_producao; participa da chave primária composta
+id_genero	Conferir no script SQL	Chave estrangeira para genero.id_genero; participa da chave primária composta
+
+
+4.8. temporada
+Armazena as temporadas das séries.
+Campo	Tipo	Restrições/finalidade
+id_temporada	Conferir no script SQL	Chave primária
+id_producao	Conferir no script SQL	Chave estrangeira para producao.id_producao
+numero_temporada	Conferir no script SQL	Número da temporada
+ano_lancamento	Conferir no script SQL	Ano de lançamento da temporada
+
+
+4.9. episodio
+Registra os episódios de cada temporada.
+Campo	Tipo	Restrições/finalidade
+id_episodio	Conferir no script SQL	Chave primária
+id_temporada	Conferir no script SQL	Chave estrangeira para temporada.id_temporada
+numero_episodio	Conferir no script SQL	Número do episódio
+titulo	Conferir no script SQL	Título do episódio
+duracao_minutos	Conferir no script SQL	Duração em minutos
+
+
+4.10. avaliacao
+Armazena as avaliações feitas pelos usuários.
+Campo	Tipo	Restrições/finalidade
+id_avaliacao	Conferir no script SQL	Chave primária
+id_usuario	Conferir no script SQL	Chave estrangeira para usuario.id_usuario
+id_producao	Conferir no script SQL	Chave estrangeira para producao.id_producao
+nota	Conferir no script SQL	Nota atribuída à produção
+comentario	Conferir no script SQL	Comentário do usuário
+data_avaliacao	Conferir no script SQL	Data da avaliação
+
+
+Observação: os tipos de dados, os valores permitidos, as restrições (NOT NULL, UNIQUE, CHECK) e a definição das chaves devem ser conferidos no modelo do MySQL Workbench e no script SQL definitivo. Esta documentação não inventa definições que não estavam presentes nos arquivos consultados.
+
+5. Relacionamentos e cardinalidades
+Relacionamento	Cardinalidade	Explicação
+pais → producao	1:N	Um país pode estar associado a várias produções; cada produção possui um país de origem cadastrado.
+usuario → assinatura	1:N	Um usuário pode possuir várias assinaturas ao longo do tempo.
+plano → assinatura	1:N	Um plano pode estar associado a várias assinaturas.
+producao ↔ genero	N:N	Uma produção pode possuir vários gêneros e um gênero pode classificar várias produções. A tabela producao_genero implementa essa relação.
+producao → temporada	1:N	Uma série pode possuir várias temporadas.
+temporada → episodio	1:N	Uma temporada pode conter vários episódios.
+usuario → avaliacao	1:N	Um usuário pode avaliar diferentes produções.
+producao → avaliacao	1:N	Uma produção pode receber avaliações de diferentes usuários.
+
+
+6. Formas normais
+6.1. Primeira Forma Normal (1FN)
+Cada campo deve armazenar um único valor, sem listas ou grupos repetidos. Na AsiaPlay, os gêneros não são armazenados em uma coluna separados por vírgulas; cada associação entre produção e gênero é registrada individualmente em producao_genero.
+6.2. Segunda Forma Normal (2FN)
+A tabela deve estar na 1FN e todos os atributos não-chave devem depender da chave primária completa. Em producao_genero, a chave primária é composta por id_producao e id_genero, e a tabela contém apenas esses campos. Assim, não há atributos adicionais que dependam somente de parte dessa chave.
+6.3. Terceira Forma Normal (3FN)
+A tabela deve estar na 2FN e os atributos não-chave não devem depender transitivamente da chave primária. Os dados dos países ficam em pais, enquanto producao armazena a referência id_pais. Da mesma forma, os preços ficam em plano, enquanto assinatura referencia o plano contratado.
+6.4. Quarta Forma Normal (4FN)
+A 4FN busca evitar redundâncias causadas por dependências multivaloradas independentes. Na AsiaPlay, as associações entre produções e gêneros ficam separadas das temporadas e dos episódios. Dessa forma, não é necessário repetir todas as combinações de gêneros e episódios em uma mesma tabela.
+7. Implementação SQL e dados de teste
 A documentação do projeto prevê três scripts SQL:
-1. 01_criacao_tabelas.sql — criação do banco e das dez tabelas;
-2. 02_insercao_dados.sql — inserção de dados de exemplo;
-3. 03_consultas.sql — quinze consultas contextualizadas.
-Importante: esses três scripts não estavam entre os arquivos disponibilizados para preparar este README. Adicione-os ao repositório e valide os comandos no MySQL antes de considerar o projeto completo. A atividade exige pelo menos cinco registros em cada tabela, inclusive producao_genero.
-Consultas previstas
-Nº	Objetivo	Recursos SQL esperados
-1	Listar produções e seus países de origem	INNER JOIN, ORDER BY
-2	Pesquisar títulos por trecho de texto	LIKE, WHERE
-3	Buscar produções por intervalo de anos	BETWEEN, ORDER BY
+- 01_criacao_tabelas.sql — criação do banco e das tabelas;
+- 02_insercao_dados.sql — inserção dos dados de exemplo;
+- 03_consultas.sql — consultas SQL do projeto.
+A atividade exige no mínimo cinco registros em cada tabela, incluindo a tabela associativa producao_genero.
+Os scripts SQL não estavam entre os arquivos disponíveis para preparar este README. Portanto, confirme que eles existem no repositório, que contêm os comandos descritos e que foram executados com sucesso antes de entregar o trabalho.
+
+8. Consultas SQL
+O projeto prevê 15 consultas contextualizadas, utilizando comandos e funções como INNER JOIN, LEFT JOIN, WHERE, LIKE, BETWEEN, GROUP BY, ORDER BY, COUNT, SUM e AVG.
+Nº	Objetivo da consulta	Recursos SQL
+1	Listar produções e países de origem	INNER JOIN, ORDER BY
+2	Pesquisar títulos por trecho do nome	LIKE, WHERE
+3	Pesquisar produções por intervalo de anos	BETWEEN, ORDER BY
 4	Listar produções de determinado gênero	JOIN, WHERE
 5	Contar produções por país	COUNT, GROUP BY
 6	Calcular a média das avaliações	AVG, GROUP BY
@@ -78,19 +191,23 @@ Nº	Objetivo	Recursos SQL esperados
 12	Listar episódios por duração	WHERE, ORDER BY
 13	Consultar usuários e suas avaliações	JOIN, ORDER BY
 14	Contar temporadas por série	LEFT JOIN, GROUP BY
-15	Calcular quantidade e duração acumulada dos episódios	COUNT, SUM, JOIN, GROUP BY
+15	Calcular o total e a duração acumulada dos episódios	COUNT, SUM, JOIN, GROUP BY
 
 
-Os resultados exatos dependem dos registros existentes nos scripts de inserção. Após executar as consultas, registre no relatório ou nos comentários do script a resposta observada no MySQL Workbench; não informe resultados sem conferir a execução.
-Como executar no MySQL Workbench
-1. Abra o MySQL Workbench e conecte-se ao servidor.
-2. Abra 01_criacao_tabelas.sql e execute o script.
-3. Abra 02_insercao_dados.sql e execute o script.
-4. Abra 03_consultas.sql e execute as consultas.
-5. Confira a lista de tabelas com SHOW TABLES;.
-6. Confira se todas as tabelas possuem ao menos cinco registros. Exemplo:
+As respostas exatas dependem dos dados inseridos no banco. Execute as consultas no MySQL Workbench e registre os resultados obtidos; não informe respostas presumidas sem validar a execução.
+9. Testes
+Depois de executar os scripts, verifique:
+- se as dez tabelas foram criadas;
+- se todas as tabelas possuem pelo menos cinco registros;
+- se as chaves primárias identificam os registros;
+- se as chaves estrangeiras mantêm os relacionamentos;
+- se as 15 consultas são executadas sem erros;
+- se os resultados correspondem aos dados cadastrados;
+- se o dump pode ser restaurado corretamente.
+Para listar as tabelas:
 USE AsiaPlay;
-
+SHOW TABLES;
+Para conferir a quantidade de registros por tabela:
 SELECT 'pais' AS tabela, COUNT(*) AS total FROM pais
 UNION ALL SELECT 'usuario', COUNT(*) FROM usuario
 UNION ALL SELECT 'plano', COUNT(*) FROM plano
@@ -101,32 +218,41 @@ UNION ALL SELECT 'producao_genero', COUNT(*) FROM producao_genero
 UNION ALL SELECT 'temporada', COUNT(*) FROM temporada
 UNION ALL SELECT 'episodio', COUNT(*) FROM episodio
 UNION ALL SELECT 'avaliacao', COUNT(*) FROM avaliacao;
-7. Verifique se as consultas executam sem erro e se as chaves estrangeiras impedem referências inválidas.
-7. Exportação e restauração do dump
-Um dump é um arquivo que pode conter a estrutura e os dados do banco, facilitando backup e restauração.
-Opção A — MySQL Workbench
-1. Conecte-se ao servidor.
-2. Abra Administration → Data Export.
-3. Selecione o schema AsiaPlay e marque todas as tabelas.
-4. Escolha Dump Structure and Data.
-5. Selecione Export to Self-Contained File.
-6. Informe o nome AsiaPlay_dump.sql.
-7. Clique em Start Export e confirme que o arquivo foi criado.
-Opção B — Terminal
-Exportar estrutura e dados:
+Cada linha retornada deve apresentar um total igual ou superior a cinco.
+10. Exportação e restauração do dump
+Um dump é um arquivo que contém a estrutura e os dados do banco de dados, permitindo realizar backups e restaurar o projeto em outro ambiente.
+10.1. Exportação pelo MySQL Workbench
+1. Abra o MySQL Workbench e conecte-se ao servidor.
+2. Acesse Administration → Data Export.
+3. Selecione o banco AsiaPlay.
+4. Marque todas as tabelas.
+5. Selecione Dump Structure and Data.
+6. Escolha Export to Self-Contained File.
+7. Defina o nome AsiaPlay_dump.sql.
+8. Clique em Start Export.
+9. Verifique se o arquivo foi criado corretamente.
+10.2. Exportação pelo terminal
 mysqldump -u root -p --databases AsiaPlay > AsiaPlay_dump.sql
-Restaurar o dump:
+O comando exporta a estrutura e os dados para o arquivo AsiaPlay_dump.sql.
+10.3. Restauração do dump
 mysql -u root -p < AsiaPlay_dump.sql
-Após restaurar, confira as tabelas, a quantidade de registros e a execução das consultas.
-8. Versionamento com Git e GitHub
-Inicialize o repositório na pasta do projeto:
+Após a restauração, verifique as tabelas, as quantidades de registros e a execução das consultas.
+11. Como executar o projeto
+1. Instale e abra o MySQL Server e o MySQL Workbench.
+2. Conecte-se ao servidor MySQL.
+3. Abra e execute 01_criacao_tabelas.sql.
+4. Execute 02_insercao_dados.sql.
+5. Execute 03_consultas.sql.
+6. Confira os resultados das consultas e os registros de todas as tabelas.
+7. Exporte o banco para AsiaPlay_dump.sql.
+8. Salve a imagem da modelagem para incluir na entrega.
+Execute os scripts na ordem indicada para que as tabelas existam antes da inserção de dados e das consultas.
+Comandos Git
 git init
 git status
 git add README.md 01_criacao_tabelas.sql 02_insercao_dados.sql 03_consultas.sql
-git commit -m "Adiciona projeto de banco de dados AsiaPlay"
+git commit -m "Adiciona documentação do projeto AsiaPlay"
 git branch -M main
 git remote add origin https://github.com/SEU-USUARIO/AsiaPlay-Banco-de-Dados.git
 git push -u origin main
-Substitua SEU-USUARIO pelo nome real da conta GitHub e configure o nome/e-mail do Git, se necessário:
-git config --global user.name "Seu Nome"
-git config --global user.email "seu-email@example.com"
+Substitua SEU-USUARIO pelo seu nome de usuário do GitHub. Se o repositório remoto já estiver configurado, não execute git remote add origin novamente.
