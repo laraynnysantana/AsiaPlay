@@ -4,7 +4,9 @@ Projeto acadêmico de banco de dados relacional para organizar a operação de u
 SGBD: MySQL
 Modelagem: MySQL Workbench
 Banco de dados: AsiaPlay
+
 📌 Sumário
+
 1. Domínio do banco de dados
 2. Contextualização
 3. Proposta de melhoria
