@@ -247,12 +247,4 @@ Após a restauração, verifique as tabelas, as quantidades de registros e a exe
 7. Exporte o banco para AsiaPlay_dump.sql.
 8. Salve a imagem da modelagem para incluir na entrega.
 Execute os scripts na ordem indicada para que as tabelas existam antes da inserção de dados e das consultas.
-Comandos Git
-git init
-git status
-git add README.md 01_criacao_tabelas.sql 02_insercao_dados.sql 03_consultas.sql
-git commit -m "Adiciona documentação do projeto AsiaPlay"
-git branch -M main
-git remote add origin https://github.com/SEU-USUARIO/AsiaPlay-Banco-de-Dados.git
-git push -u origin main
-Substitua SEU-USUARIO pelo seu nome de usuário do GitHub. Se o repositório remoto já estiver configurado, não execute git remote add origin novamente.
+
