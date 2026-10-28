@@ -65,7 +65,6 @@ email	Conferir no script SQL	E-mail do usuário
 data_cadastro	Conferir no script SQL	Data do cadastro
 data_nascimento	Conferir no script SQL	Data de nascimento
 
-
 4.3. plano
 Registra os planos oferecidos pela plataforma.
 Campo	Tipo	Restrições/finalidade
